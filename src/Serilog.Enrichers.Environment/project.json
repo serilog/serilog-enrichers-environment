@@ -1,23 +1,33 @@
 ﻿{
-  "version": "2.0.0-beta-*",
+  "version": "2.0.0-rc-*",
   "description": "Enrich Serilog log events with properties from System.Environment.",
-  "authors": [ "Serilog Contributors" ],
-  "tags": [ "serilog", "machine", "enricher" ],
-  "projectUrl": "http://serilog.net",
-  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-  "iconUrl": "http://serilog.net/images/serilog-enricher-nuget.png",
-  "dependencies": {
-    "Serilog": "2.0.0-beta-511"
+  "authors": [
+    "Serilog Contributors"
+  ],
+  "packOptions": {
+    "tags": [
+      "serilog",
+      "machine",
+      "enricher"
+    ],
+    "projectUrl": "http://serilog.net",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "iconUrl": "http://serilog.net/images/serilog-enricher-nuget.png"
   },
-  "compilationOptions": {
+  "dependencies": {
+    "Serilog": "2.0.0-rc-556"
+  },
+  "buildOptions": {
     "keyFile": "../../assets/Serilog.snk"
+     
   },
   "frameworks": {
-    "net45": {
+    "net4.5": {
+      "define": ["ENV_USER_NAME"]
     },
-    "dotnet5.4": {
+    "netstandard1.5": {
       "dependencies": {
-        "System.Runtime.Extensions": "4.0.11-beta-23516"
+        "System.Runtime.Extensions": "4.1.0-rc2-24027"
       }
     }
   }
