@@ -19,9 +19,12 @@
   },
   "buildOptions": {
     "keyFile": "../../assets/Serilog.snk"
+     
   },
   "frameworks": {
-    "net4.5": {},
+    "net4.5": {
+      "define": ["ENV_USER_NAME"]
+    },
     "netstandard1.5": {
       "dependencies": {
         "System.Runtime.Extensions": "4.1.0-rc2-24027"
