@@ -22,7 +22,7 @@
   },
   "frameworks": {
     "net4.5": {},
-    "netstandard1.0": {
+    "netstandard1.5": {
       "dependencies": {
         "System.Runtime.Extensions": "4.1.0-rc2-24027"
       }

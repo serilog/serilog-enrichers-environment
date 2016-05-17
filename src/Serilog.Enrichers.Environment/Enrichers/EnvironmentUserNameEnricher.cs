@@ -45,7 +45,7 @@ namespace Serilog.Enrichers
 
         private static string GetEnvironmentUserName()
         {
-#if !DOTNET5_4
+#if NET4_5
             var userDomainName = Environment.UserDomainName;
             var userName = Environment.UserName;
 #else
