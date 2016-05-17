@@ -1,21 +1,17 @@
-{
-  "version": "2.0.0-rc-*",
-  "commands": {
-    "test": "xunit.runner.dnx",
-    "test-dnxcore50": "xunit.runner.dnx"
-  },
-  "dependencies": {
-    "Serilog": "2.0.0-rc-556", 
+{ 
+  "testRunner": "xunit",
+  "dependencies": { 
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10015",
     "Serilog.Enrichers.Environment": {
       "target": "project"
     }
   },
+  "buildOptions": {
+    "keyFile": "../../assets/Serilog.snk"
+  },
   "frameworks": {
-    "net4.5.2": {
-      "buildOptions": {}
-    },
+    "net4.6": { },
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
