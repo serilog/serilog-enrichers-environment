@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{037440DE-440B-4129-9F7A-09B42D00397E}"
 EndProject
@@ -18,7 +18,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Serilog.Enrichers.Environme
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{406006F7-12FA-4A8A-ADC8-80E5338F5275}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Serilog.Tests", "test\Serilog.Tests\Serilog.Tests.xproj", "{3C2D8E01-5580-426A-BDD9-EC59CD98E618}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Serilog.Enrichers.Environment.Tests", "test\Serilog.Enrichers.Environment.Tests\Serilog.Enrichers.Environment.Tests.xproj", "{3C2D8E01-5580-426A-BDD9-EC59CD98E618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
