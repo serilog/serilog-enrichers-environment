@@ -22,7 +22,7 @@ deploy:
     branch: /^(master)$/
 - provider: GitHub
   auth_token:
-    secure: Bo3ypKpKFxinjR9ShkNekNvkob2iklHJU+UlYyfHtcFFIAa58SV2TkEd0xWxz633
+    secure: ggZTqqV1z0xecDoQbeoy3A7xikShCt9FWZIGp95dG9Fo0p5RAT9oGU0ZekHfUIwk
   artifact: /Serilog.*\.nupkg/
   tag: v$(appveyor_build_version)
   on:
