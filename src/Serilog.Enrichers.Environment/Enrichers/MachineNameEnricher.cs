@@ -42,7 +42,11 @@ namespace Serilog.Enrichers
 #if ENV_USER_NAME
             _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, Environment.MachineName);
 #else
-            _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, Environment.GetEnvironmentVariable("COMPUTERNAME"));
+            var machineName = Environment.GetEnvironmentVariable("COMPUTERNAME");
+            if (string.IsNullOrWhiteSpace(machineName))
+                machineName = Environment.GetEnvironmentVariable("HOSTNAME");
+
+            _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, machineName);
 #endif
             logEvent.AddPropertyIfAbsent(_cachedProperty);
         }
