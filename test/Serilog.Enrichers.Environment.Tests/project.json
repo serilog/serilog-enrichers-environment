@@ -1,8 +1,8 @@
-{ 
+{
   "testRunner": "xunit",
-  "dependencies": { 
+  "dependencies": {
     "xunit": "2.1.0",
-    "dotnet-test-xunit": "1.0.0-rc2-build10015",
+    "dotnet-test-xunit": "1.0.0-*",
     "Serilog.Enrichers.Environment": {
       "target": "project"
     }
