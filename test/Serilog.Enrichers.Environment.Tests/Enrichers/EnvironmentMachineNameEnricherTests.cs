@@ -4,21 +4,21 @@ using Xunit;
 
 namespace Serilog.Tests.Enrichers
 {
-    public class EnvironmentUserNameEnricherTests
+    public class EnvironmentMachineNameEnricherTests
     {
         [Fact]
-        public void EnvironmentUserNameEnricherIsApplied()
+        public void EnvironmentMachineNameEnricherIsApplied()
         {
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.WithEnvironmentUserName()
+                .Enrich.WithMachineName()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
-            log.Information(@"Has an EnvironmentUserName property with [domain\]userName");
+            log.Information(@"Has an MachineName property");
 
             Assert.NotNull(evt);
-            Assert.NotEmpty((string)evt.Properties["EnvironmentUserName"].LiteralValue());
+            Assert.NotEmpty((string)evt.Properties["MachineName"].LiteralValue());
         }
     }
 }
