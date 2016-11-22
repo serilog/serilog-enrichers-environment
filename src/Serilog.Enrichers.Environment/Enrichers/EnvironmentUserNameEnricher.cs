@@ -49,8 +49,8 @@ namespace Serilog.Enrichers
             var userDomainName = Environment.UserDomainName;
             var userName = Environment.UserName;
 #else
-            var userDomainName = Environment.GetEnvironmentVariable("USERNAME");
-            var userName = Environment.GetEnvironmentVariable("USERDOMAIN");
+            var userDomainName = Environment.GetEnvironmentVariable("USERDOMAIN");
+            var userName = Environment.GetEnvironmentVariable("USERNAME");
 #endif
             return !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
         }
