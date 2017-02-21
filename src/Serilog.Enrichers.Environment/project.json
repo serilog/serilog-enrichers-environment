@@ -23,12 +23,11 @@
   },
   "frameworks": {
     "net4.5": {
-      "define": ["ENV_USER_NAME"]
+      "buildOptions": {
+        "define": [ "ENV_USER_NAME" ]
+      }
     },
     "netstandard1.3": {
-      "dependencies": {
-        "System.Runtime.Extensions": "4.1.0"
-      }
     }
   }
 }
