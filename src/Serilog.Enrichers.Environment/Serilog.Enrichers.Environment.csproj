@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Enrich Serilog log events with properties from System.Environment.</Description>
-    <VersionPrefix>2.1.3</VersionPrefix>
+    <VersionPrefix>2.2.0</VersionPrefix>
     <Authors>Serilog Contributors</Authors>
     <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
     <AssemblyName>Serilog.Enrichers.Environment</AssemblyName>
@@ -15,6 +15,7 @@
     <PackageProjectUrl>http://serilog.net</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <Version>2.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

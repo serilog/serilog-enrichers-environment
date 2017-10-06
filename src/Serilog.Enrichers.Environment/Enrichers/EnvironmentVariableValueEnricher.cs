@@ -11,30 +11,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
- 
+
 
 using System;
 
 namespace Serilog.Enrichers
 {
     /// <summary>
-    /// Enriches log events with a MachineName property containing <see cref="Environment.MachineName"/>.
+    /// Enriches log events with a Env_* property containing the value of an Enviroment Variable.
     /// </summary>
-    public class MachineNameEnricher : CachedPropertyEnricher
+    public class EnvironmentVariableValueEnricher : CachedPropertyEnricher
     {
-        public override string PropertyName => "MachineName";
+        readonly string _envVarName;
+
+        public override string PropertyName { get; }
+
+        public EnvironmentVariableValueEnricher(string envVarName)
+        {
+            _envVarName = envVarName;
+            PropertyName = $"Env_{_envVarName}";
+        }
 
         protected override object GeneratePropertyValue()
         {
-#if ENV_USER_NAME
-            return Environment.MachineName;
-#else
-            var machineName = Environment.GetEnvironmentVariable("COMPUTERNAME");
-            if (string.IsNullOrWhiteSpace(machineName))
-                machineName = Environment.GetEnvironmentVariable("HOSTNAME");
-
-            return machineName;
-#endif
+            return Environment.GetEnvironmentVariable(_envVarName);
         }
     }
-} 
+}
