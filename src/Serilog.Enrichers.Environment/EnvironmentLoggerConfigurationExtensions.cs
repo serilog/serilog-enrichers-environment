@@ -37,6 +37,18 @@ namespace Serilog
         }
 
         /// <summary>
+        /// Enrich log events with an MD5-hashed MachineName property containing the current <see cref="Environment.MachineName"/>.
+        /// </summary>
+        /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <returns>Configuration object allowing method chaining.</returns>
+        public static LoggerConfiguration WithHashedMachineName(
+            this LoggerEnrichmentConfiguration enrichmentConfiguration)
+        {
+            if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
+            return enrichmentConfiguration.With<HashedMachineNameEnricher>();
+        }
+
+        /// <summary>
         /// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
         /// </summary>
         /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
