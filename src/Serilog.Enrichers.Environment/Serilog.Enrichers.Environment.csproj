@@ -15,6 +15,7 @@
     <PackageProjectUrl>http://serilog.net</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <Version>2.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

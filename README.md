@@ -26,7 +26,8 @@ The `WithMachineName()` enricher will add a `MachineName` property to produced e
 The package includes:
 
  * `WithMachineName()` - adds `MachineName` based on either `%COMPUTERNAME%` (Windows) or `$HOSTNAME` (macOS, Linux)
- * `WithHashedMachineName()` - same as `WithMachineName()` but the name is hashed. Any `HashAlgorithm` can be used, though SHA256 is used by default.
+ * `WithHashedMachineName()` -  same as `WithMachineName()`but hashes the value. Any `HashAlgorithm` derivative can be used. SHA256 is the default.
  * `WithEnvironmentUserName()` - adds `EnvironmentUserName` based on `USERNAME` and `USERDOMAIN` (if available)
+ * `WithEnvironmentVariableValue(string envVarName)` - adds an  `Env_<envVarName>` property to the log event with the value for the specified enviroment variable.
 
 Copyright &copy; 2016 Serilog Contributors - Provided under the [Apache License, Version 2.0](http://apache.org/licenses/LICENSE-2.0.html).

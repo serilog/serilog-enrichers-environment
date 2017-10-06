@@ -23,32 +23,21 @@ namespace Serilog.Enrichers
     /// <summary>
     /// Enriches log events with a MachineName property containing <see cref="Environment.MachineName"/>.
     /// </summary>
-    public class MachineNameEnricher : ILogEventEnricher
+    public class MachineNameEnricher : CachedPropertyEnricher
     {
-        LogEventProperty _cachedProperty;
+        public override string PropertyName => "MachineName";
 
-        /// <summary>
-        /// The property name added to enriched log events.
-        /// </summary>
-        public const string MachineNamePropertyName = "MachineName";
-
-        /// <summary>
-        /// Enrich the log event.
-        /// </summary>
-        /// <param name="logEvent">The log event to enrich.</param>
-        /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+        protected override object GeneratePropertyValue()
         {
 #if ENV_USER_NAME
-            _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, Environment.MachineName);
+            return Environment.MachineName;
 #else
             var machineName = Environment.GetEnvironmentVariable("COMPUTERNAME");
             if (string.IsNullOrWhiteSpace(machineName))
                 machineName = Environment.GetEnvironmentVariable("HOSTNAME");
 
-            _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, machineName);
+            return machineName;
 #endif
-            logEvent.AddPropertyIfAbsent(_cachedProperty);
         }
     }
 } 
