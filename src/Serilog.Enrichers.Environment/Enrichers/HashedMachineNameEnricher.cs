@@ -14,25 +14,26 @@ namespace Serilog.Enrichers
     public class HashedMachineNameEnricher : ILogEventEnricher
     {
         LogEventProperty _cachedProperty;
+        private readonly HashAlgorithm _hashAlgorithm;
+
+        public HashedMachineNameEnricher(HashAlgorithm hashAlgorithm)
+        {
+            _hashAlgorithm = hashAlgorithm ?? SHA256.Create();
+        }
 
         /// <summary>
         /// The property name added to enriched log events.
         /// </summary>
         public const string HashedMachineNamePropertyName = "HashedMachineName";
 
-        /// <summary>
-        /// Enrich the log event.
-        /// </summary>
-        /// <param name="logEvent">The log event to enrich.</param>
-        /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
+        /// <inheritdoc />
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(HashedMachineNamePropertyName, CalculateMachineNameHash());
-
             logEvent.AddPropertyIfAbsent(_cachedProperty);
         }
 
-        private static string CalculateMachineNameHash()
+        string CalculateMachineNameHash()
         {
 #if ENV_USER_NAME
             var machineName = Environment.MachineName;
@@ -43,7 +44,7 @@ namespace Serilog.Enrichers
 #endif
 
             return Convert.ToBase64String(
-                MD5.Create().ComputeHash(
+                _hashAlgorithm.ComputeHash(
                     new UTF8Encoding().GetBytes(machineName)));
         }
     }

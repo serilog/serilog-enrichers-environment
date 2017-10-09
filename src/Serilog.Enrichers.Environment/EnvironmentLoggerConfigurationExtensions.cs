@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Security.Cryptography;
 using Serilog.Configuration;
 using Serilog.Enrichers;
 
@@ -40,12 +41,13 @@ namespace Serilog
         /// Enrich log events with an MD5-hashed MachineName property containing the current <see cref="Environment.MachineName"/>.
         /// </summary>
         /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <param name="hashAlgorithm">The <see cref="HashAlgorithm"/> to use. SHA256 is used by default</param>
         /// <returns>Configuration object allowing method chaining.</returns>
         public static LoggerConfiguration WithHashedMachineName(
-            this LoggerEnrichmentConfiguration enrichmentConfiguration)
+            this LoggerEnrichmentConfiguration enrichmentConfiguration, HashAlgorithm hashAlgorithm = null)
         {
             if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
-            return enrichmentConfiguration.With<HashedMachineNameEnricher>();
+            return enrichmentConfiguration.With(new HashedMachineNameEnricher(hashAlgorithm));
         }
 
         /// <summary>
