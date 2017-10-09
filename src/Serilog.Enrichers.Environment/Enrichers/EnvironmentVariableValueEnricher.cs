@@ -11,30 +11,33 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+ 
 
 using System;
 using Serilog.Core;
 using Serilog.Events;
+using System.Runtime.InteropServices;
 
 namespace Serilog.Enrichers
 {
     /// <summary>
-    /// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
+    /// Enriches log events with a Env_* property containing the value of an Enviroment Variable.
     /// </summary>
-    public class EnvironmentUserNameEnricher : CachedPropertyEnricher
+    public class EnvironmentVariableValueEnricher : CachedPropertyEnricher
     {
-        public override string PropertyName => "EnvironmentUserName";
-        
+        readonly string _envVarName;
+
+        public override string PropertyName { get; }
+
+        public EnvironmentVariableValueEnricher(string envVarName)
+        {
+            _envVarName = envVarName;
+            PropertyName = $"Env_{_envVarName}";
+        }
+
         protected override object GeneratePropertyValue()
         {
-#if ENV_USER_NAME
-            var userDomainName = Environment.UserDomainName;
-            var userName = Environment.UserName;
-#else
-            var userDomainName = Environment.GetEnvironmentVariable("USERDOMAIN");
-            var userName = Environment.GetEnvironmentVariable("USERNAME");
-#endif
-            return !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
+            return Environment.GetEnvironmentVariable(_envVarName);
         }
     }
-}
+} 
