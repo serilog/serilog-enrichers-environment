@@ -45,6 +45,8 @@ namespace Serilog.Enrichers
             var machineName = Environment.GetEnvironmentVariable("COMPUTERNAME");
             if (string.IsNullOrWhiteSpace(machineName))
                 machineName = Environment.GetEnvironmentVariable("HOSTNAME");
+            if (string.IsNullOrWhiteSpace(machineName))
+                machineName = Environment.GetEnvironmentVariable("CF_INSTANCE_INDEX");
 
             _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(MachineNamePropertyName, machineName);
 #endif
