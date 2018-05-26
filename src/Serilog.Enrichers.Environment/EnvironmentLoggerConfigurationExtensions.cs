@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Security.Cryptography;
 using Serilog.Configuration;
 using Serilog.Enrichers;
 
@@ -46,7 +47,23 @@ namespace Serilog
         {
             if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<EnvironmentUserNameEnricher>();
-        } 
+        }
 
+
+        /// <summary>
+        /// Enriches log events with an Env_* property containing the value of the specified Environment Variable using
+        /// [<see cref="Environment.GetEnvironmentVariable"/>\]<see cref="Environment.GetEnvironmentVariable"/>.
+        /// </summary>
+        /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <param name="environmentVariableName">The name of the Environment Variable</param>
+        /// <returns>Configuration object allowing method chaining.</returns>
+        public static LoggerConfiguration WithEnvironmentVariable(
+            this LoggerEnrichmentConfiguration enrichmentConfiguration, string environmentVariableName)
+        {
+            if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
+            if (string.IsNullOrEmpty(environmentVariableName)) throw new ArgumentNullException(nameof(environmentVariableName));
+
+            return enrichmentConfiguration.With(new EnvironmentVariableValueEnricher(environmentVariableName));
+        }
     }
 }
