@@ -4,7 +4,7 @@
     <Description>Enrich Serilog log events with properties from System.Environment.</Description>
     <VersionPrefix>2.1.3</VersionPrefix>
     <Authors>Serilog Contributors</Authors>
-    <TargetFrameworks>net45;netstandard1.3;netstandard1.5</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard1.3;netstandard1.5;netstandard2.0</TargetFrameworks>
     <AssemblyName>Serilog.Enrichers.Environment</AssemblyName>
     <AssemblyOriginatorKeyFile>../../assets/Serilog.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
