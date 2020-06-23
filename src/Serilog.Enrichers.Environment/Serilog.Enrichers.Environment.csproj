@@ -32,7 +32,7 @@
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netstandard1.3' AND '$(TargetFramework)' != 'netstandard1.5' ">
     <DefineConstants>$(DefineConstants);ENV_USER_NAME</DefineConstants>
   </PropertyGroup>
 
