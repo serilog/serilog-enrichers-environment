@@ -23,17 +23,18 @@ namespace Serilog
     /// capabilities.
     /// </summary>
     public static class EnvironmentLoggerConfigurationExtensions
-    { 
+    {
         /// <summary>
         /// Enrich log events with a MachineName property containing the current <see cref="Environment.MachineName"/>.
         /// </summary>
         /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <param name="customPropertyName">Custom property name to override the default of MachineName</param>
         /// <returns>Configuration object allowing method chaining.</returns>
         public static LoggerConfiguration WithMachineName(
-           this LoggerEnrichmentConfiguration enrichmentConfiguration)
+           this LoggerEnrichmentConfiguration enrichmentConfiguration, string customPropertyName = MachineNameEnricher.DefaultMachineNamePropertyName)
         {
             if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
-            return enrichmentConfiguration.With<MachineNameEnricher>();
+            return enrichmentConfiguration.With(new MachineNameEnricher(customPropertyName));
         }
 
         /// <summary>
