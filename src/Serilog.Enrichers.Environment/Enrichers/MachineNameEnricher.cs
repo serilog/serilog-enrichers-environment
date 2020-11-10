@@ -16,7 +16,6 @@ using System;
 using Serilog.Core;
 using Serilog.Events;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 #if NETSTANDARD1_3
 using System.Net;
