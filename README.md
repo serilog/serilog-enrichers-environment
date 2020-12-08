@@ -27,5 +27,6 @@ The package includes:
 
  * `WithMachineName()` - adds `MachineName` based on either `%COMPUTERNAME%` (Windows) or `$HOSTNAME` (macOS, Linux)
  * `WithEnvironmentUserName()` - adds `EnvironmentUserName` based on `USERNAME` and `USERDOMAIN` (if available)
+ * `WithEnvironmentName()` - adds `EnvironmentName` based on `DOTNET_ENVIRONMENT` or `ASPNETCORE_ENVIRONMENT` (whichever is available or when both are available then 'DOTNET_ENVIRONMENT' takes precedence)
 
 Copyright &copy; 2016 Serilog Contributors - Provided under the [Apache License, Version 2.0](http://apache.org/licenses/LICENSE-2.0.html).

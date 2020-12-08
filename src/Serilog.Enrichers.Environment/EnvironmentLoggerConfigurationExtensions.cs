@@ -25,6 +25,18 @@ namespace Serilog
     public static class EnvironmentLoggerConfigurationExtensions
     { 
         /// <summary>
+        /// Enrich log events with a EnvironmentName property containing the value of the DOTNET_ENVIRONMENT or ASPNETCORE_ENVIRONMENT environment variable.
+        /// </summary>
+        /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <returns>Configuration object allowing method chaining.</returns>
+        public static LoggerConfiguration WithEnvironmentName(
+           this LoggerEnrichmentConfiguration enrichmentConfiguration)
+        {
+            if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
+            return enrichmentConfiguration.With<EnvironmentNameEnricher>();
+        }
+
+        /// <summary>
         /// Enrich log events with a MachineName property containing the current <see cref="Environment.MachineName"/>.
         /// </summary>
         /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
