@@ -62,6 +62,11 @@ namespace Serilog.Enrichers
                 environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             }
 
+            if (string.IsNullOrWhiteSpace(environmentName))
+            {
+                environmentName = "Production";
+            }
+
             return propertyFactory.CreateProperty(EnvironmentNamePropertyName, environmentName);
         }
     }
