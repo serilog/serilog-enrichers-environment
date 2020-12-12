@@ -20,7 +20,7 @@ using System.Runtime.CompilerServices;
 namespace Serilog.Enrichers
 {
     /// <summary>
-    /// Enriches log events with a EnvironmentName property containing the value of the DOTNET_ENVIRONMENT or ASPNETCORE_ENVIRONMENT environment variable.
+    /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
     /// </summary>
     public class EnvironmentNameEnricher : ILogEventEnricher
     {
@@ -55,11 +55,11 @@ namespace Serilog.Enrichers
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
         {
-            var environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             if (string.IsNullOrWhiteSpace(environmentName))
             {
-                environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
             }
 
             if (string.IsNullOrWhiteSpace(environmentName))

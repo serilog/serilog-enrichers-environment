@@ -23,9 +23,9 @@ namespace Serilog
     /// capabilities.
     /// </summary>
     public static class EnvironmentLoggerConfigurationExtensions
-    { 
+    {
         /// <summary>
-        /// Enrich log events with a EnvironmentName property containing the value of the DOTNET_ENVIRONMENT or ASPNETCORE_ENVIRONMENT environment variable.
+        /// Enrich log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
         /// </summary>
         /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
         /// <returns>Configuration object allowing method chaining.</returns>
