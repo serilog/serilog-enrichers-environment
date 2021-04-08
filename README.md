@@ -26,6 +26,7 @@ The `WithMachineName()` enricher will add a `MachineName` property to produced e
 The package includes:
 
  * `WithMachineName()` - adds `MachineName` based on either `%COMPUTERNAME%` (Windows) or `$HOSTNAME` (macOS, Linux)
+ * `WithHashedMachineName()` - same as `WithMachineName()` but the name is hashed. Any `HashAlgorithm` can be used, though SHA256 is used by default.
  * `WithEnvironmentUserName()` - adds `EnvironmentUserName` based on `USERNAME` and `USERDOMAIN` (if available)
  * `WithEnvironmentName()` - adds `EnvironmentName` based on `ASPNETCORE_ENVIRONMENT` or `DOTNET_ENVIRONMENT` (when both are available then 'ASPNETCORE_ENVIRONMENT' takes precedence, when none are available then the fallback value will be 'Production')
 
