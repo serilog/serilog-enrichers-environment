@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2016 Serilog Contributors
+﻿// Copyright 2013-2022 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,27 +21,14 @@ namespace Serilog.Enrichers
     /// <summary>
     /// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
     /// </summary>
-    public class EnvironmentUserNameEnricher : ILogEventEnricher
+    public class EnvironmentUserNameEnricher : CachedPropertyEnricher
     {
-        LogEventProperty _cachedProperty;
-
         /// <summary>
         /// The property name added to enriched log events.
         /// </summary>
         public const string EnvironmentUserNamePropertyName = "EnvironmentUserName";
 
-        /// <summary>
-        /// Enrich the log event.
-        /// </summary>
-        /// <param name="logEvent">The log event to enrich.</param>
-        /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            _cachedProperty = _cachedProperty ?? propertyFactory.CreateProperty(EnvironmentUserNamePropertyName, GetEnvironmentUserName());
-            logEvent.AddPropertyIfAbsent(_cachedProperty);
-        }
-
-        private static string GetEnvironmentUserName()
+        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
         {
 #if ENV_USER_NAME
             var userDomainName = Environment.UserDomainName;
@@ -50,7 +37,9 @@ namespace Serilog.Enrichers
             var userDomainName = Environment.GetEnvironmentVariable("USERDOMAIN");
             var userName = Environment.GetEnvironmentVariable("USERNAME");
 #endif
-            return !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
+            var environmentUserName =  !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
+
+            return propertyFactory.CreateProperty(EnvironmentUserNamePropertyName, environmentUserName);
         }
     }
 }

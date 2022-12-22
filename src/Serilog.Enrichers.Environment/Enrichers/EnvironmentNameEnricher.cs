@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2018 Serilog Contributors
+﻿// Copyright 2013-2022 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,38 +22,16 @@ namespace Serilog.Enrichers
     /// <summary>
     /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
     /// </summary>
-    public class EnvironmentNameEnricher : ILogEventEnricher
+    public class EnvironmentNameEnricher : CachedPropertyEnricher
     {
-        LogEventProperty _cachedProperty;
-
         /// <summary>
         /// The property name added to enriched log events.
         /// </summary>
         public const string EnvironmentNamePropertyName = "EnvironmentName";
 
-        /// <summary>
-        /// Enrich the log event.
-        /// </summary>
-        /// <param name="logEvent">The log event to enrich.</param>
-        /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            logEvent.AddPropertyIfAbsent(GetLogEventProperty(propertyFactory));
-        }
-
-        private LogEventProperty GetLogEventProperty(ILogEventPropertyFactory propertyFactory)
-        {
-            // Don't care about thread-safety, in the worst case the field gets overwritten and one
-            // property will be GCed
-            if (_cachedProperty == null)
-                _cachedProperty = CreateProperty(propertyFactory);
-
-            return _cachedProperty;
-        }
-
         // Qualify as uncommon-path
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
+        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
