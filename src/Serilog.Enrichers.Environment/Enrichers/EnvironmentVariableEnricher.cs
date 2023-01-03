@@ -1,4 +1,4 @@
-﻿// Copyright 2013-2022 Serilog Contributors
+// Copyright 2013-2022 Serilog Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,30 +22,28 @@ namespace Serilog.Enrichers
     /// <summary>
     /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
     /// </summary>
-    public class EnvironmentNameEnricher : CachedPropertyEnricher
+    public class EnvironmentVariableEnricher : CachedPropertyEnricher
     {
+        private readonly string _envVarName;
+
         /// <summary>
         /// The property name added to enriched log events.
         /// </summary>
-        public const string EnvironmentNamePropertyName = "EnvironmentName";
+        public string EnvironmentVariablePropertyName { get; }
+        
+        public EnvironmentVariableEnricher(string envVarName, string propertyName)
+        {
+            _envVarName = envVarName;
+            EnvironmentVariablePropertyName = propertyName ?? envVarName;
+        }
 
         // Qualify as uncommon-path
         [MethodImpl(MethodImplOptions.NoInlining)]
         protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
         {
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var environmentVariableValue = Environment.GetEnvironmentVariable(_envVarName);
 
-            if (string.IsNullOrWhiteSpace(environmentName))
-            {
-                environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-            }
-
-            if (string.IsNullOrWhiteSpace(environmentName))
-            {
-                environmentName = "Production";
-            }
-
-            return propertyFactory.CreateProperty(EnvironmentNamePropertyName, environmentName);
+            return propertyFactory.CreateProperty(EnvironmentVariablePropertyName, environmentVariableValue);
         }
     }
 }

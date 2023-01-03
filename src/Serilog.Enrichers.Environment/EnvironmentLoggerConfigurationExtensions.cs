@@ -58,7 +58,23 @@ namespace Serilog
         {
             if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<EnvironmentUserNameEnricher>();
-        } 
+        }
+        
+        /// <summary>
+        /// Enriches log events with an property containing the value of the specified Environment Variable using
+        /// [<see cref="Environment.GetEnvironmentVariable"/>\]<see cref="Environment.GetEnvironmentVariable"/>.
+        /// </summary>
+        /// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+        /// <param name="environmentVariableName">The name of the Environment Variable</param>
+        /// <param name="propertyName">The Optional name of the property. If empty <see cref="environmentVariableName"/> is used</param>
+        /// <returns>Configuration object allowing method chaining.</returns>
+        public static LoggerConfiguration WithEnvironmentVariable(
+            this LoggerEnrichmentConfiguration enrichmentConfiguration, string environmentVariableName, string propertyName = null)
+        {
+            if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
+            var environmentVariableEnricher = new EnvironmentVariableEnricher(environmentVariableName, propertyName);
+            return enrichmentConfiguration.With(environmentVariableEnricher);
+        }
 
     }
 }
