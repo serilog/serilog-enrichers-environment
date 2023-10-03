@@ -16,7 +16,7 @@ deploy:
     secure: dw2kT1B1gpFLOE7ZHhExKgcspS+tf5maUq0jEdH17YyHjUxQpemGcwvbe4nuf/Ic
   skip_symbols: true
   on:
-    branch: /^(master|dev)$/
+    branch: /^(main|dev)$/
 - provider: GitHub
   auth_token:
     secure: p4LpVhBKxGS5WqucHxFQ5c7C8cP74kbNB0Z8k9Oxx/PMaDQ1+ibmoexNqVU5ZlmX
