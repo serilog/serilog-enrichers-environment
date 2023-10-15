@@ -69,7 +69,7 @@ namespace Serilog
         /// <param name="propertyName">The Optional name of the property. If empty <see cref="environmentVariableName"/> is used</param>
         /// <returns>Configuration object allowing method chaining.</returns>
         public static LoggerConfiguration WithEnvironmentVariable(
-            this LoggerEnrichmentConfiguration enrichmentConfiguration, string environmentVariableName, string propertyName = null)
+            this LoggerEnrichmentConfiguration enrichmentConfiguration, string environmentVariableName, string? propertyName = null)
         {
             if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
             var environmentVariableEnricher = new EnvironmentVariableEnricher(environmentVariableName, propertyName);

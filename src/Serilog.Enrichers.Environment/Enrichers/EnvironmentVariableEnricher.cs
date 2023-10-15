@@ -31,7 +31,7 @@ namespace Serilog.Enrichers
         /// </summary>
         public string EnvironmentVariablePropertyName { get; }
         
-        public EnvironmentVariableEnricher(string envVarName, string propertyName)
+        public EnvironmentVariableEnricher(string envVarName, string? propertyName)
         {
             _envVarName = envVarName;
             EnvironmentVariablePropertyName = propertyName ?? envVarName;
