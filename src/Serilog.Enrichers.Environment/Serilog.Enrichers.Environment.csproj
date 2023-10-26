@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Enrich Serilog log events with properties from System.Environment.</Description>
-    <VersionPrefix>2.3.1</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>Serilog Contributors</Authors>
     <TargetFrameworks>net45;netstandard1.3;netstandard1.5;netstandard2.0</TargetFrameworks>
     <AssemblyName>Serilog.Enrichers.Environment</AssemblyName>
