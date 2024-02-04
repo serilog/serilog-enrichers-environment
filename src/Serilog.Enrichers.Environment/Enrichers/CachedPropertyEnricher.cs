@@ -19,7 +19,7 @@ namespace Serilog.Enrichers
 {
     public abstract class CachedPropertyEnricher: ILogEventEnricher
     {
-        private LogEventProperty _cachedProperty { get; set; }
+        private LogEventProperty? _cachedProperty { get; set; }
 
         /// <summary>
         /// Enrich the log event.
@@ -35,8 +35,7 @@ namespace Serilog.Enrichers
         {
             // Don't care about thread-safety, in the worst case the field gets overwritten and one
             // property will be GCed
-            if (_cachedProperty == null)
-                _cachedProperty = CreateProperty(propertyFactory);
+            _cachedProperty ??= CreateProperty(propertyFactory);
 
             return _cachedProperty;
         }
