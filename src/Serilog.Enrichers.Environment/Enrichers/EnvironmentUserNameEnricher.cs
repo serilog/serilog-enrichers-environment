@@ -21,7 +21,7 @@ namespace Serilog.Enrichers;
 /// <summary>
 /// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
 /// </summary>
-class EnvironmentUserNameEnricher : CachedPropertyEnricher
+sealed class EnvironmentUserNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
     /// The property name added to enriched log events.

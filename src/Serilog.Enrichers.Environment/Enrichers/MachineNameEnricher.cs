@@ -21,7 +21,7 @@ namespace Serilog.Enrichers;
 /// <summary>
 /// Enriches log events with a MachineName property containing <see cref="Environment.MachineName"/>.
 /// </summary>
-class MachineNameEnricher : CachedPropertyEnricher
+sealed class MachineNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
     /// The property name added to enriched log events.

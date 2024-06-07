@@ -21,7 +21,7 @@ namespace Serilog.Enrichers;
 /// <summary>
 /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
 /// </summary>
-class EnvironmentNameEnricher : CachedPropertyEnricher
+sealed class EnvironmentNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
     /// The property name added to enriched log events.

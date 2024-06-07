@@ -23,13 +23,13 @@ foreach ($src in ls src/*) {
 
 	echo "build: Packaging project in $src"
 
-    & dotnet build -c Release --version-suffix=$buildSuffix -p:EnableSourceLink=true
+    & dotnet build -c Release --version-suffix=$buildSuffix -p:ContinuousIntegrationBuild=true
     if ($suffix) {
         & dotnet pack -c Release -o ..\..\artifacts --version-suffix=$suffix --no-build
     } else {
         & dotnet pack -c Release -o ..\..\artifacts --no-build
     }
-    if($LASTEXITCODE -ne 0) { throw "build failed" }    
+    if($LASTEXITCODE -ne 0) { throw "build failed" }
 
     Pop-Location
 }
