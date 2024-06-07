@@ -46,15 +46,4 @@ foreach ($test in gci test/*.Tests) {
     Pop-Location
 }
 
-foreach ($test in ls test/*.PerformanceTests) {
-    Push-Location $test
-
-	echo "build: Building performance test project in $test"
-
-    & dotnet build -c Release
-    if($LASTEXITCODE -ne 0) { exit 2 }
-
-    Pop-Location
-}
-
 Pop-Location

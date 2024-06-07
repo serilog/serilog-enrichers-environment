@@ -15,35 +15,31 @@
 using System;
 using Serilog.Core;
 using Serilog.Events;
-using System.Runtime.CompilerServices;
 
-namespace Serilog.Enrichers
+namespace Serilog.Enrichers;
+
+/// <summary>
+/// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
+/// </summary>
+class EnvironmentVariableEnricher : CachedPropertyEnricher
 {
+    readonly string _envVarName;
+
     /// <summary>
-    /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
+    /// The property name added to enriched log events.
     /// </summary>
-    public class EnvironmentVariableEnricher : CachedPropertyEnricher
-    {
-        private readonly string _envVarName;
-
-        /// <summary>
-        /// The property name added to enriched log events.
-        /// </summary>
-        public string EnvironmentVariablePropertyName { get; }
+    string EnvironmentVariablePropertyName { get; }
         
-        public EnvironmentVariableEnricher(string envVarName, string? propertyName)
-        {
-            _envVarName = envVarName;
-            EnvironmentVariablePropertyName = propertyName ?? envVarName;
-        }
+    public EnvironmentVariableEnricher(string envVarName, string? propertyName)
+    {
+        _envVarName = envVarName;
+        EnvironmentVariablePropertyName = propertyName ?? envVarName;
+    }
 
-        // Qualify as uncommon-path
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
-        {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(_envVarName);
+    protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
+    {
+        var environmentVariableValue = Environment.GetEnvironmentVariable(_envVarName);
 
-            return propertyFactory.CreateProperty(EnvironmentVariablePropertyName, environmentVariableValue);
-        }
+        return propertyFactory.CreateProperty(EnvironmentVariablePropertyName, environmentVariableValue);
     }
 }

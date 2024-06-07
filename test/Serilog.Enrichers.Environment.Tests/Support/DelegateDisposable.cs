@@ -4,8 +4,8 @@ namespace Serilog.Tests.Support
 {
     public class DelegateDisposable : IDisposable
     {
-        private readonly Action _disposeAction;
-        private bool _disposed;
+        readonly Action _disposeAction;
+        bool _disposed;
 
         public DelegateDisposable(Action disposeAction)
         {

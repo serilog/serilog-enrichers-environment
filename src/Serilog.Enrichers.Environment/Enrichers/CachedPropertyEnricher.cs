@@ -15,31 +15,28 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Enrichers
+namespace Serilog.Enrichers;
+
+abstract class CachedPropertyEnricher: ILogEventEnricher
 {
-    public abstract class CachedPropertyEnricher: ILogEventEnricher
+    LogEventProperty? CachedProperty { get; set; }
+
+    /// <summary>
+    /// Enrich the log event.
+    /// </summary>
+    /// <param name="logEvent">The log event to enrich.</param>
+    /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
     {
-        private LogEventProperty? _cachedProperty { get; set; }
-
-        /// <summary>
-        /// Enrich the log event.
-        /// </summary>
-        /// <param name="logEvent">The log event to enrich.</param>
-        /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            logEvent.AddPropertyIfAbsent(GetLogEventProperty(propertyFactory));
-        }
-
-        private LogEventProperty GetLogEventProperty(ILogEventPropertyFactory propertyFactory)
-        {
-            // Don't care about thread-safety, in the worst case the field gets overwritten and one
-            // property will be GCed
-            _cachedProperty ??= CreateProperty(propertyFactory);
-
-            return _cachedProperty;
-        }
-        
-        protected abstract LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory);
+        logEvent.AddPropertyIfAbsent(GetLogEventProperty(propertyFactory));
     }
+
+    LogEventProperty GetLogEventProperty(ILogEventPropertyFactory propertyFactory)
+    {
+        // Don't care about thread-safety, in the worst case the field gets overwritten and one
+        // property will be GCed
+        return CachedProperty ??= CreateProperty(propertyFactory);
+    }
+        
+    protected abstract LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory);
 }
