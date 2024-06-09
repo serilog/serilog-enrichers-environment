@@ -16,30 +16,24 @@ using System;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Enrichers
+namespace Serilog.Enrichers;
+
+/// <summary>
+/// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
+/// </summary>
+sealed class EnvironmentUserNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
-    /// Enriches log events with an EnvironmentUserName property containing [<see cref="Environment.UserDomainName"/>\]<see cref="Environment.UserName"/>.
+    /// The property name added to enriched log events.
     /// </summary>
-    public class EnvironmentUserNameEnricher : CachedPropertyEnricher
+    const string EnvironmentUserNamePropertyName = "EnvironmentUserName";
+
+    protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
     {
-        /// <summary>
-        /// The property name added to enriched log events.
-        /// </summary>
-        public const string EnvironmentUserNamePropertyName = "EnvironmentUserName";
+        var userDomainName = Environment.UserDomainName;
+        var userName = Environment.UserName;
+        var environmentUserName =  !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
 
-        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
-        {
-#if ENV_USER_NAME
-            var userDomainName = Environment.UserDomainName;
-            var userName = Environment.UserName;
-#else
-            var userDomainName = Environment.GetEnvironmentVariable("USERDOMAIN");
-            var userName = Environment.GetEnvironmentVariable("USERNAME");
-#endif
-            var environmentUserName =  !string.IsNullOrWhiteSpace(userDomainName) ? $@"{userDomainName}\{userName}" : userName;
-
-            return propertyFactory.CreateProperty(EnvironmentUserNamePropertyName, environmentUserName);
-        }
+        return propertyFactory.CreateProperty(EnvironmentUserNamePropertyName, environmentUserName);
     }
 }
