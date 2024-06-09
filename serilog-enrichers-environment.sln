@@ -8,9 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{E9D1B5E1-DEB9-4A04-8BAB-24EC7240ADAF}"
 	ProjectSection(SolutionItems) = preProject
 		Build.ps1 = Build.ps1
-		NuGet.Config = NuGet.Config
 		README.md = README.md
 		assets\Serilog.snk = assets\Serilog.snk
+		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{406006F7-12FA-4A8A-ADC8-80E5338F5275}"

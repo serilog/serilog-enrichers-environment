@@ -15,34 +15,22 @@
 using System;
 using Serilog.Core;
 using Serilog.Events;
-using System.Runtime.CompilerServices;
 
-#if NETSTANDARD1_3
-using System.Net;
-#endif
+namespace Serilog.Enrichers;
 
-namespace Serilog.Enrichers
+/// <summary>
+/// Enriches log events with a MachineName property containing <see cref="Environment.MachineName"/>.
+/// </summary>
+sealed class MachineNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
-    /// Enriches log events with a MachineName property containing <see cref="Environment.MachineName"/>.
+    /// The property name added to enriched log events.
     /// </summary>
-    public class MachineNameEnricher : CachedPropertyEnricher
-    {
-        /// <summary>
-        /// The property name added to enriched log events.
-        /// </summary>
-        public const string MachineNamePropertyName = "MachineName";
+    const string MachineNamePropertyName = "MachineName";
 
-        // Qualify as uncommon-path
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
-        {
-#if NETSTANDARD1_3
-            var machineName = Dns.GetHostName();
-#else
-            var machineName = Environment.MachineName;
-#endif
-            return propertyFactory.CreateProperty(MachineNamePropertyName, machineName);
-        }
+    protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
+    {
+        var machineName = Environment.MachineName;
+        return propertyFactory.CreateProperty(MachineNamePropertyName, machineName);
     }
 }

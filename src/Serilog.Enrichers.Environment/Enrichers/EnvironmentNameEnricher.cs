@@ -15,37 +15,33 @@
 using System;
 using Serilog.Core;
 using Serilog.Events;
-using System.Runtime.CompilerServices;
 
-namespace Serilog.Enrichers
+namespace Serilog.Enrichers;
+
+/// <summary>
+/// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
+/// </summary>
+sealed class EnvironmentNameEnricher : CachedPropertyEnricher
 {
     /// <summary>
-    /// Enriches log events with a EnvironmentName property containing the value of the ASPNETCORE_ENVIRONMENT or DOTNET_ENVIRONMENT environment variable.
+    /// The property name added to enriched log events.
     /// </summary>
-    public class EnvironmentNameEnricher : CachedPropertyEnricher
+    const string EnvironmentNamePropertyName = "EnvironmentName";
+
+    protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
     {
-        /// <summary>
-        /// The property name added to enriched log events.
-        /// </summary>
-        public const string EnvironmentNamePropertyName = "EnvironmentName";
+        var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-        // Qualify as uncommon-path
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        protected override LogEventProperty CreateProperty(ILogEventPropertyFactory propertyFactory)
+        if (string.IsNullOrWhiteSpace(environmentName))
         {
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            if (string.IsNullOrWhiteSpace(environmentName))
-            {
-                environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-            }
-
-            if (string.IsNullOrWhiteSpace(environmentName))
-            {
-                environmentName = "Production";
-            }
-
-            return propertyFactory.CreateProperty(EnvironmentNamePropertyName, environmentName);
+            environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         }
+
+        if (string.IsNullOrWhiteSpace(environmentName))
+        {
+            environmentName = "Production";
+        }
+
+        return propertyFactory.CreateProperty(EnvironmentNamePropertyName, environmentName);
     }
 }
