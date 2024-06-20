@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Description>Enrich Serilog log events with properties from System.Environment.</Description>
-        <VersionPrefix>3.0.1</VersionPrefix>
+        <VersionPrefix>3.0.2</VersionPrefix>
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../../assets/Serilog.snk</AssemblyOriginatorKeyFile>
